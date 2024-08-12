@@ -3,7 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Events\UsuarioCriado;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, BelongsToMany};
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -47,8 +49,16 @@ class User extends Authenticatable
         ];
     }
 
-    public function role()
+    protected $dispatchesEvents = [
+        'created' => UsuarioCriado::class,
+    ];
+    public function role(): belongsTo
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function projetos(): belongsToMany
+    {
+        return $this->belongsToMany(Projeto::class);
     }
 }

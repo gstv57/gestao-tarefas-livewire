@@ -6,10 +6,10 @@
   <title>{{ config('app.name', 'Laravel') }}</title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
-  <link rel="icon" href="assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="/assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
 
   <!-- Fonts and icons -->
-  <script src="assets/js/plugin/webfont/webfont.min.js"></script>
+  <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
   <script>
     WebFont.load({
       google: { families: ["Public Sans:300,400,500,600,700"] },
@@ -20,7 +20,7 @@
           "Font Awesome 5 Brands",
           "simple-line-icons",
         ],
-        urls: ["assets/css/fonts.min.css"],
+        urls: ["/assets/css/fonts.min.css"],
       },
       active: function () {
         sessionStorage.fonts = true;
@@ -29,18 +29,20 @@
   </script>
 
   <!-- CSS Files -->
-  <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="assets/css/plugins.min.css" />
-  <link rel="stylesheet" href="assets/css/kaiadmin.min.css" />
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+  <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-  <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link rel="stylesheet" href="assets/css/demo.css" />
-  @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link rel="stylesheet" href="/assets/css/demo.css" />
+  @vite(['resources/js/app.js'])
   @livewireStyles
-
 </head>
 
 <body>
+
   <div class="wrapper">
     <!-- Sidebar -->
     <div class="sidebar" data-background-color="dark">
@@ -48,7 +50,7 @@
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
           <a href="index.html" class="logo">
-            <img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20" />
+            <img src="/assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20" />
           </a>
           <div class="nav-toggle">
             <button class="btn btn-toggle toggle-sidebar">
@@ -76,10 +78,25 @@
               <div class="collapse" id="dashboard">
                 <ul class="nav nav-collapse">
                   <li>
-                    <a href="../demo1/index.html">
-                      <span class="sub-item">Criar Usúario</span>
+                    <a href="{{ route('usuarios.index') }}">
+                      <span class="sub-item">Usúarios</span>
                     </a>
                   </li>
+                <li>
+                    <a href="{{ route('usuarios.create') }}">
+                        <span class="sub-item">Criar Usúario</span>
+                    </a>
+                </li>
+                    <li>
+                        <a href="{{ route('projeto.index') }}">
+                            <span class="sub-item">Todos os Projetos</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('projetos.create') }}">
+                            <span class="sub-item">Criar Projeto</span>
+                        </a>
+                    </li>
                 </ul>
               </div>
             </li>
@@ -322,7 +339,7 @@
           <!-- Logo Header -->
           <div class="logo-header" data-background-color="dark">
             <a href="index.html" class="logo">
-              <img src="assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20" />
+              <img src="/assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20" />
             </a>
             <div class="nav-toggle">
               <button class="btn btn-toggle toggle-sidebar">
@@ -383,7 +400,7 @@
                       <div class="notif-center">
                         <a href="#">
                           <div class="notif-img">
-                            <img src="assets/img/jm_denis.jpg" alt="Img Profile" />
+                            <img src="/assets/img/jm_denis.jpg" alt="Img Profile" />
                           </div>
                           <div class="notif-content">
                             <span class="subject">Jimmy Denis</span>
@@ -393,7 +410,7 @@
                         </a>
                         <a href="#">
                           <div class="notif-img">
-                            <img src="assets/img/chadengle.jpg" alt="Img Profile" />
+                            <img src="/assets/img/chadengle.jpg" alt="Img Profile" />
                           </div>
                           <div class="notif-content">
                             <span class="subject">Chad</span>
@@ -403,7 +420,7 @@
                         </a>
                         <a href="#">
                           <div class="notif-img">
-                            <img src="assets/img/mlane.jpg" alt="Img Profile" />
+                            <img src="/assets/img/mlane.jpg" alt="Img Profile" />
                           </div>
                           <div class="notif-content">
                             <span class="subject">Jhon Doe</span>
@@ -415,7 +432,7 @@
                         </a>
                         <a href="#">
                           <div class="notif-img">
-                            <img src="assets/img/talha.jpg" alt="Img Profile" />
+                            <img src="/assets/img/talha.jpg" alt="Img Profile" />
                           </div>
                           <div class="notif-content">
                             <span class="subject">Talha</span>
@@ -469,7 +486,7 @@
                         </a>
                         <a href="#">
                           <div class="notif-img">
-                            <img src="assets/img/profile2.jpg" alt="Img Profile" />
+                            <img src="/assets/img/profile2.jpg" alt="Img Profile" />
                           </div>
                           <div class="notif-content">
                             <span class="block">
@@ -565,11 +582,11 @@
               <li class="nav-item topbar-user dropdown hidden-caret">
                 <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
                   <div class="avatar-sm">
-                    <img src="assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle" />
+                    <img src="/assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle" />
                   </div>
                   <span class="profile-username">
                     <span class="op-7">Hi,</span>
-                    <span class="fw-bold">Hizrian</span>
+                    <span class="fw-bold">{{ Auth::user()->name }}</span>
                   </span>
                 </a>
                 <ul class="dropdown-menu dropdown-user animated fadeIn">
@@ -577,11 +594,11 @@
                     <li>
                       <div class="user-box">
                         <div class="avatar-lg">
-                          <img src="assets/img/profile.jpg" alt="image profile" class="rounded avatar-img" />
+                          <img src="/assets/img/profile.jpg" alt="image profile" class="rounded avatar-img" />
                         </div>
                         <div class="u-text">
-                          <h4>Hizrian</h4>
-                          <p class="text-muted">hello@example.com</p>
+                          <h4>{{ Auth::user()->name }}</h4>
+                          <p class="text-muted">{{ Auth::user()->email }}</p>
                           <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
                         </div>
                       </div>
@@ -594,7 +611,7 @@
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item" href="#">Account Setting</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Logout</a>
+                      <a class="dropdown-item">Logout</a>
                     </li>
                   </div>
                 </ul>
@@ -607,20 +624,21 @@
 
       <div class="container">
         <div class="page-inner">
-          <div class="page-header">
-            <h4 class="page-title">Dashboard</h4>
-            <ul class="breadcrumbs">
-              <li class="nav-home">
-                <a href="#">
-                  <i class="icon-home"></i>
-                </a>
-              </li>
-            </ul>
-          </div>
+{{--          <div class="page-header">--}}
+{{--            <h4 class="page-title">Dashboard</h4>--}}
+{{--            <ul class="breadcrumbs">--}}
+{{--              <li class="nav-home">--}}
+{{--                <a href="#">--}}
+{{--                  <i class="icon-home"></i>--}}
+{{--                </a>--}}
+{{--              </li>--}}
+{{--            </ul>--}}
+{{--          </div>--}}
           <div class="page-category">
             {{ $slot }}
           </div>
         </div>
+
       </div>
 
       <footer class="footer">
@@ -651,45 +669,48 @@
         </div>
       </footer>
     </div>
+
   </div>
 
-
   @livewireScripts
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <x-livewire-alert::scripts />
+
   <!--   Core JS Files   -->
-  <script src="assets/js/core/jquery-3.7.1.min.js"></script>
-  <script src="assets/js/core/popper.min.js"></script>
-  <script src="assets/js/core/bootstrap.min.js"></script>
+  <script src="/assets/js/core/jquery-3.7.1.min.js"></script>
+  <script src="/assets/js/core/popper.min.js"></script>
+  <script src="/assets/js/core/bootstrap.min.js"></script>
 
   <!-- jQuery Scrollbar -->
-  <script src="assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+  <script src="/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
 
   <!-- Chart JS -->
-  <script src="assets/js/plugin/chart.js/chart.min.js"></script>
+  <script src="/assets/js/plugin/chart.js/chart.min.js"></script>
 
   <!-- jQuery Sparkline -->
-  <script src="assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+  <script src="/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
 
   <!-- Chart Circle -->
-  <script src="assets/js/plugin/chart-circle/circles.min.js"></script>
+  <script src="/assets/js/plugin/chart-circle/circles.min.js"></script>
 
   <!-- Datatables -->
-  <script src="assets/js/plugin/datatables/datatables.min.js"></script>
+  <script src="/assets/js/plugin/datatables/datatables.min.js"></script>
 
   <!-- Bootstrap Notify -->
-  <script src="assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+  <script src="/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
 
   <!-- jQuery Vector Maps -->
-  <script src="assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-  <script src="assets/js/plugin/jsvectormap/world.js"></script>
+  <script src="/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
+  <script src="/assets/js/plugin/jsvectormap/world.js"></script>
 
   <!-- Google Maps Plugin -->
-  <script src="assets/js/plugin/gmaps/gmaps.js"></script>
+  <script src="/assets/js/plugin/gmaps/gmaps.js"></script>
 
   <!-- Sweet Alert -->
-  <script src="assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+  <script src="/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
 
   <!-- Kaiadmin JS -->
-  <script src="assets/js/kaiadmin.min.js"></script>
+  <script src="/assets/js/kaiadmin.min.js"></script>
 </body>
 
 </html>
