@@ -3,10 +3,10 @@
 namespace App\Livewire\Projeto;
 
 use App\Models\{Group, Projeto, Task, User};
+use Exception;
 use Illuminate\View\View;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
-use Mockery\Exception;
 
 class ProjetoShow extends Component
 {
@@ -19,7 +19,6 @@ class ProjetoShow extends Component
     public $membro;
 
     public $membros_existentes;
-
     public function render(): View
     {
         return view('livewire.projeto.projeto-show')->layout('layouts.app');
@@ -29,7 +28,8 @@ class ProjetoShow extends Component
     {
         $this->projeto            = $id->load('board.groups.tasks.user');
         $this->membros_existentes = $this->projeto->users;
-        $this->membros            = User::where('is_active', 1)
+
+        $this->membros = User::where('is_active', 1)
             ->whereNotIn('id', $this->membros_existentes->pluck('id')->toArray())
             ->get();
     }
@@ -69,27 +69,8 @@ class ProjetoShow extends Component
             $task->user_id = auth()->user()->id;
             $task->save();
             $this->alert('success', 'Tarefa vinculada a mim com sucesso!');
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $this->alert('error', $exception->getMessage());
-        }
-    }
-
-    public function attachMember(): void
-    {
-        try {
-            $this->projeto->users()->attach($this->membro);
-            $this->alert('success', 'Membro vinculado com sucesso!');
-        } catch (Exception $e) {
-            $this->alert('error', 'Aconteceu algo de errado ao vinculado um membro! Entre em contato com o suporte.');
-        }
-    }
-    public function detachMember(): void
-    {
-        try {
-            $this->projeto->users()->detach($this->membro);
-            $this->alert('success', 'Membro desvinculado com sucesso!');
-        } catch (Exception $e) {
-            $this->alert('error', 'Aconteceu algo de errado ao desvincular um membro! Entre em contato com o suporte.');
         }
     }
 }
