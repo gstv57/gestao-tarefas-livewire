@@ -1,5 +1,4 @@
 <main class="content">
-    <livewire:projeto.toolbar.toolbar-show :id="$projeto->id"></livewire:projeto.toolbar.toolbar-show>
     <div class="container-fluid">
 {{--        <livewire:projeto.participante.participante-show :participantes="$projeto->users"></livewire:projeto.participante.participante-show>--}}
         <div class="row"

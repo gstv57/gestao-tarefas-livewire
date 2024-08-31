@@ -38,12 +38,13 @@ class ProjetoCreate extends Component
             'end_date'    => ['nullable', 'date', 'after_or_equal:start_date'],
         ]);
         $validated['user_id'] = auth()->user()->id;
-
         try {
             Projeto::create($validated);
-            $this->alert('success', 'Redirecionando em 2 segundos!');
+            $this->alert('success', 'Redirecionando!');
             $this->unfill();
+            //to_route("projetos.show");
         } catch (Exception $e) {
+            dd($e->getMessage());
             $this->alert('error', 'Ocorreu um erro ao criar o projeto. Tente novamente.');
         }
     }
