@@ -19,6 +19,8 @@ class ProjetoShow extends Component
     public $membro;
 
     public $membros_existentes;
+
+    protected $listeners = ['task-created' => '$refresh'];
     public function render(): View
     {
         return view('livewire.projeto.projeto-show')->layout('layouts.app');

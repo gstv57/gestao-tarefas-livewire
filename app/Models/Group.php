@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany};
 
 class Group extends Model
 {
-    protected $fillable = ['name', 'board_id'];
+    protected $fillable = ['name', 'board_id', 'position'];
 
     public function board(): belongsTo
     {
@@ -17,4 +17,5 @@ class Group extends Model
     {
         return $this->hasMany(Task::class);
     }
+
 }

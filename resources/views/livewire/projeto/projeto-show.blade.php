@@ -12,6 +12,7 @@
                 }
              })"
         >
+
             @if($projeto->board)
                 @foreach($projeto->board->groups->sortBy('position') as $group)
                     <div class="col-12 col-lg-6 col-xl-3" group-id="{{ $group->id }}" style="border-radius: 5px;">
@@ -32,8 +33,7 @@
                                             const tasksIds = Array.from(to.children).map(item => item.getAttribute('task-id'))
                                             @this.reorderTasks({ groupId, tasksIds })
                                         }
-                                     })"
-                                >
+                                     })">
                                     @foreach($group->tasks->sortBy('position') as $task)
                                         <div task-id="{{ $task->id }}"
                                              class="p-3 cursor-pointer card-body position-relative" style="background-color: #1a2035; border-radius: 5px; margin: 1px; color: white;">
@@ -46,20 +46,20 @@
                                                     {{ $task->user->name ?? '' }}
                                                 </div>
                                             @endif
-                                            @if(!$task->user_id)
-                                                <div class="top-0 p-2 dropdown position-absolute end-0">
-                                                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">
-                                                        <i class="bi bi-three-dots"></i>
-                                                    </button>
-                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                        <li><a class="dropdown-item" href="#" wire:click="attachForMe({{ $task->id }})">Vincular a mim</a></li>
-                                                    </ul>
-                                                </div>
-                                            @endif
+{{--                                            @if(!$task->user_id)--}}
+{{--                                                <div class="top-0 p-2 dropdown position-absolute end-0">--}}
+{{--                                                    <button class="btn btn-link dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;">--}}
+{{--                                                        <i class="bi bi-three-dots"></i>--}}
+{{--                                                    </button>--}}
+{{--                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">--}}
+{{--                                                        <li><a class="dropdown-item" href="#" wire:click="attachForMe({{ $task->id }})">Vincular a mim</a></li>--}}
+{{--                                                    </ul>--}}
+{{--                                                </div>--}}
+{{--                                            @endif--}}
                                         </div>
                                     @endforeach
                                 </div>
-                                <a href="#" class="btn btn-primary btn-sm">Criar</a>
+                                <button class="btn btn-primary" wire:click="$dispatchTo('modal.task.task-create', 'show-modal', { id: {{ $group->id }} })">Criar</button>
                             </div>
                         </div>
                     </div>
@@ -138,4 +138,8 @@
 
         </style>
     </div>
+    <livewire:modal.task.task-create></livewire:modal.task.task-create>
+    <livewire:modal.group.group-create :board="$projeto->board->id"></livewire:modal.group.group-create>
+
+    <button class="btn btn-primary" x-data @click="Livewire.dispatchTo('modal.group.group-create', 'show-modal')">Nova Coluna</button>
 </main>

@@ -38,6 +38,7 @@ class ProjetoCreate extends Component
             'end_date'    => ['nullable', 'date', 'after_or_equal:start_date'],
         ]);
         $validated['user_id'] = auth()->user()->id;
+
         try {
             Projeto::create($validated);
             $this->alert('success', 'Redirecionando!');
