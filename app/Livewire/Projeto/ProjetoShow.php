@@ -20,7 +20,7 @@ class ProjetoShow extends Component
 
     public $membros_existentes;
 
-    protected $listeners = ['confirmed' ,'task-created' => '$refresh', 'column-created' => '$refresh', 'task-deleted' => '$refresh'];
+    protected $listeners = ['users-attach' => '$refresh', 'task-created' => '$refresh', 'column-created' => '$refresh', 'task-deleted' => '$refresh'];
     public function render(): View
     {
         return view('livewire.projeto.projeto-show')->layout('layouts.app');
