@@ -17,15 +17,20 @@ class GroupSeeder extends Seeder
             'board_id' => 1,
         ]);
         Group::create([
-            'name'     => 'Doing',
+            'name'     => 'Análise',
             'board_id' => 1,
         ]);
         Group::create([
-            'name'     => 'Review',
+            'name'     => 'Desenvolvimento',
             'board_id' => 1,
         ]);
         Group::create([
-            'name'     => 'Done',
+            'name'     => 'Testes',
+            'board_id' => 1,
+        ]);
+
+        Group::create([
+            'name'     => 'Pronto',
             'board_id' => 1,
         ]);
     }

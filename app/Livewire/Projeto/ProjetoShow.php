@@ -20,7 +20,7 @@ class ProjetoShow extends Component
 
     public $membros_existentes;
 
-    protected $listeners = ['task-created' => '$refresh'];
+    protected $listeners = ['confirmed' ,'task-created' => '$refresh', 'column-created' => '$refresh', 'task-deleted' => '$refresh'];
     public function render(): View
     {
         return view('livewire.projeto.projeto-show')->layout('layouts.app');
@@ -64,13 +64,22 @@ class ProjetoShow extends Component
                 $task->save();
             });
     }
-
     public function attachForMe(Task $task): void
     {
         try {
             $task->user_id = auth()->user()->id;
             $task->save();
             $this->alert('success', 'Tarefa vinculada a mim com sucesso!');
+        } catch (Exception $exception) {
+            $this->alert('error', $exception->getMessage());
+        }
+    }
+    public function deleteTask(Task $task)
+    {
+        try {
+            $task->delete();
+            $this->dispatch('task-deleted')->self();
+            $this->alert('success', 'Tarefa exclúida com sucesso!');
         } catch (Exception $exception) {
             $this->alert('error', $exception->getMessage());
         }

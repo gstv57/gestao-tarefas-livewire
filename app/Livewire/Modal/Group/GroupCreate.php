@@ -2,13 +2,16 @@
 
 namespace App\Livewire\Modal\Group;
 
+use App\Livewire\Projeto\ProjetoShow;
 use App\Livewire\Traits\IsModal;
 use App\Models\{Board, Group};
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 class GroupCreate extends Component
 {
+    use LivewireAlert;
     use IsModal;
 
     public string $nome = '';
@@ -36,6 +39,10 @@ class GroupCreate extends Component
             'position' => $this->posicao,
             'board_id' => $this->board->id,
         ]);
+
+        $this->dispatch('close-modal')->self();
+        $this->dispatch('column-created')->to(ProjetoShow::class);
+        $this->alert('success', 'Coluna criada com sucesso!');
     }
 
     #[On('hidden')]

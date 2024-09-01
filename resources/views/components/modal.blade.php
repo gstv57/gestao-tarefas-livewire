@@ -13,7 +13,7 @@
     <div class="backdrop" x-show="visibily">
         <!-- Modal -->
         <div class="modal-content">
-            <h1 class="modal-title">{{ $title }}</h1>
+            <h1 class="modal-title text-black">{{ $title }}</h1>
             {{ $slot }}
         </div>
     </div>
