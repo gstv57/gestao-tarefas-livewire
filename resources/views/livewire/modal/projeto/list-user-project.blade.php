@@ -17,7 +17,7 @@
                                 <i class="fas fa-plus-circle text-primary"></i>
                             </button>
                         @empty
-                            <div class="list-group-item text-muted">Sem usuários disponíveis para cadastrar</div>
+                            <div class="list-group-item text-muted">Sem usuários disponíveis para remoção</div>
                         @endforelse
                     </div>
                 @endif
@@ -42,8 +42,8 @@
         </div>
     </div>
     <div class="mt-4 text-end">
-        <button type="button" class="btn btn-secondary">Cancelar</button>
-        <button type="button" class="btn btn-primary" wire:click="attachUser">Vincular Usuários</button>
+        <button id="fechar" class="btn btn-danger" wire:click="dispatchTo('modal.projeto.list-user-project', 'close-modal')">Cancelar</button>
+        <button type="button" class="btn btn-primary" wire:click="dettachUser">Desvincular Usuários</button>
     </div>
 
     <style>

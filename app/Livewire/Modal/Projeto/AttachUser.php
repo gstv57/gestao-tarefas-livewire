@@ -30,9 +30,9 @@ class AttachUser extends Component
     public function mount(Projeto $projeto)
     {
         $this->projeto = $projeto;
-        $this->get_users();
+        $this->get_users_in_project();
     }
-    private function get_users()
+    private function get_users_in_project()
     {
         $users_ids   = $this->projeto->users()->pluck('users.id')->toArray();
         $this->users = User::whereNotIn('id', $users_ids)->limit(50)->get();
@@ -52,16 +52,30 @@ class AttachUser extends Component
     }
     public function updatedQuery()
     {
-        $this->users = User::where('name', 'like', '%' . $this->query . '%')->get();
+        // return query only users where not belong this project
+        $this->users = User::where('name', 'like', '%' . $this->query . '%')
+            ->whereDoesntHave('projetos', function ($query) {
+                $query->where('projeto_id', $this->projeto->id);
+            })
+            ->get();
     }
+
     public function usersSelected(User $id)
     {
         $this->users_selected[] = $id;
     }
     public function removeUserSelected(User $id)
     {
-        // to-do
+        foreach ($this->users_selected as $key => $user) {
+            if ($user->id === $id->id) {
+                unset($this->users_selected[$key]);
+
+                break;
+            }
+        }
+        $this->users_selected = array_values($this->users_selected);
     }
+
     #[On('hidden')]
     public function cleanup()
     {

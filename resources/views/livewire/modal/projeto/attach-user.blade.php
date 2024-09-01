@@ -42,7 +42,7 @@
         </div>
     </div>
     <div class="mt-4 text-end">
-        <button type="button" class="btn btn-secondary">Cancelar</button>
+        <button id="fechar" class="btn btn-danger" wire:click="dispatchTo('modal.projeto.attach-user', 'close-modal')">Cancelar</button>
         <button type="button" class="btn btn-primary" wire:click="attachUser">Vincular Usuários</button>
     </div>
 
