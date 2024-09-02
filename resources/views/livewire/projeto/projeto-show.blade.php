@@ -76,45 +76,63 @@
             @endforeach
         @endif
     </div>
-    <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 flex">
-        <div class="card bg-body mt-4">
-            <div class="card-header d-flex justify-content-between align-items-center py-3">
-                <h5 class="card-title mb-0 text-black">Configurações</h5>
-            </div>
-            <div class="card-body d-flex flex-column">
-                <div class="flex-grow-1 mb-3">
-                    <button
-                        class="btn btn-dark btn-sm w-100"
-                        wire:click="$dispatchTo('modal.projeto.attach-user', 'show-modal')"
-                    >
-                        <i class="fas fa-user me-1"></i> Adicionar um usuário
-                    </button>
+    @can('settings-projeto')
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 flex">
+            <div class="card bg-body mt-4">
+                <div class="card-header d-flex justify-content-between align-items-center py-3">
+                    <h5 class="card-title mb-0 text-black">Configurações</h5>
                 </div>
+                <div class="card-body d-flex flex-column">
+                    <div class="flex-grow-1 mb-3">
+                        <button
+                            class="btn btn-dark btn-sm w-100"
+                            wire:click="$dispatchTo('modal.projeto.attach-user', 'show-modal')"
+                        >
+                            <i class="fas fa-user me-1"></i> Adicionar um usuário
+                        </button>
+                    </div>
 
-                <div class="flex-grow-1 mb-3">
-                    <button
-                        class="btn btn-dark btn-sm w-100"
-                        wire:click="$dispatchTo('modal.projeto.list-user-project', 'show-modal')"
-                    >
-                        <i class="fas fa-user me-1"></i> Ver Usuários Ativos
-                    </button>
+                    <div class="flex-grow-1 mb-3">
+                        <button
+                            class="btn btn-dark btn-sm w-100"
+                            wire:click="$dispatchTo('modal.projeto.list-user-project', 'show-modal')"
+                        >
+                            <i class="fas fa-user me-1"></i> Ver Usuários Ativos
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
+    @endcan
     <div class="mt-4 text-center">
         <button class="btn btn-success" x-data @click="Livewire.dispatchTo('modal.group.group-create', 'show-modal')">
             <i class="fas fa-plus me-1"></i> Nova Coluna
         </button>
     </div>
 
-    <livewire:modal.task.task-create></livewire:modal.task.task-create>
-    <livewire:modal.group.group-create :board="$projeto->board->id"></livewire:modal.group.group-create>
-    <livewire:modal.projeto.attach-user :projeto="$projeto->id"></livewire:modal.projeto.attach-user>
-    <livewire:modal.projeto.list-user-project :projeto="$projeto->id"></livewire:modal.projeto.list-user-project>
-    <livewire:modal.task.detail.detail-show></livewire:modal.task.detail.detail-show>
-    <livewire:modal.task.detail.file.file-upload></livewire:modal.task.detail.file.file-upload>
+    @can('create-task')
+        <livewire:modal.task.task-create></livewire:modal.task.task-create>
+    @endcan
+
+    @can('create-group')
+        <livewire:modal.group.group-create :board="$projeto->board->id"></livewire:modal.group.group-create>
+    @endcan
+
+    @can('attach-user-projeto')
+        <livewire:modal.projeto.attach-user :projeto="$projeto->id"></livewire:modal.projeto.attach-user>
+    @endcan
+
+    @can('list-user-projeto')
+        <livewire:modal.projeto.list-user-project :projeto="$projeto->id"></livewire:modal.projeto.list-user-project>
+    @endcan
+
+    @can('detail-task')
+        <livewire:modal.task.detail.detail-show></livewire:modal.task.detail.detail-show>
+    @endcan
+
+    @can('upload-file-task')
+        <livewire:modal.task.detail.file.file-upload></livewire:modal.task.detail.file.file-upload>
+    @endcan
 
     <style>
         .card {

@@ -11,16 +11,16 @@ class PermissionSeeder extends Seeder
     public function run(): void
     {
         $permissions = [
-            'user'       => ['create', 'view', 'edit', 'update', 'destroy'],
+            'navbar'     => ['user', 'projetos', 'roles'],
+            'user'       => ['create', 'view', 'edit', 'update', 'destroy', 'list'],
             'role'       => ['create', 'view', 'edit', 'update', 'destroy'],
             'permission' => ['create', 'view', 'edit', 'update', 'destroy'],
-            'projeto'    => ['create', 'view', 'edit', 'update', 'destroy'],
+            'projeto'    => ['create', 'view', 'edit', 'update', 'destroy', 'attach-user', 'list-user', 'settings'],
             'board'      => ['create', 'view', 'edit', 'update', 'destroy'],
             'group'      => ['create', 'view', 'edit', 'update', 'destroy'],
-            'task'       => ['create', 'view', 'edit', 'update', 'destroy'],
+            'task'       => ['create', 'view', 'edit', 'update', 'destroy', 'upload-file', 'detail'],
         ];
 
-        // Loop para criar permissões e atribuí-las ao papel de admin
         foreach ($permissions as $module => $actions) {
             foreach ($actions as $action) {
                 // Criação da permissão
@@ -28,8 +28,16 @@ class PermissionSeeder extends Seeder
                 DB::table('permission_role')->insert([
                     'role_id'       => 1, // Altere conforme necessário
                     'permission_id' => $permission->id,
+                    'created_at'    => now(),
+                    'updated_at'    => now(),
                 ]);
             }
         }
+        DB::table('role_user')->insert([
+            'role_id'    => 1,
+            'user_id'    => 1,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 }

@@ -18,6 +18,8 @@ class FileUpload extends Component
 
     public function render()
     {
+        $this->authorize('upload-file-task');
+
         return view('livewire.modal.task.detail.file.file-upload');
     }
 

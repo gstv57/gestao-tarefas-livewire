@@ -16,18 +16,15 @@
                     </thead>
                     <tbody>
                     @forelse($roles as $role)
-                        <tr>
+                        <tr wire:key="{{ $role->id }}">
                             <td>{{ $role->id }}</td>
                             <td>{{ $role->name }}</td>
                             <td>
                                 <div class="d-flex gap-2">
-                                    <button class="btn btn-info btn-sm" wire:click="viewRole({{ $role->id }})">
-                                        <i class="bi bi-eye"></i> Ver
-                                    </button>
-                                    <button class="btn btn-warning btn-sm text-white" wire:click="editRole({{ $role->id }})">
+                                    <button class="btn btn-warning btn-sm text-white" wire:click="$dispatchTo('modal.role.role-edit', 'show-modal', { role: {{ $role->id }} })">
                                         <i class="bi bi-pencil-square"></i> Editar
                                     </button>
-                                    <button class="btn btn-danger btn-sm" wire:click="deleteRole({{ $role->id }})" onclick="confirm('Você tem certeza que deseja excluir este Role?') || event.stopImmediatePropagation()">
+                                    <button class="btn btn-danger btn-sm" wire:click="destroyRole({{ $role->id }})" wire:confirm.prompt="Você tem certeza? \n\nDigite EXCLUIR para confirmar|EXCLUIR">
                                         <i class="bi bi-trash"></i> Excluir
                                     </button>
                                 </div>
@@ -45,4 +42,12 @@
     </div>
 
     <livewire:role.role-create :permissions="$permissions"></livewire:role.role-create>
+    <livewire:modal.role.role-edit :permissions="$permissions"></livewire:modal.role.role-edit>
+    @script
+        <script>
+            $wire.on('role-deleted', () => {
+                $wire.$refresh()
+            });
+        </script>
+    @endscript
 </div>

@@ -20,6 +20,8 @@ class TaskCreate extends Component
 
     public function render()
     {
+        $this->authorize('create-task');
+
         return view('livewire.modal.task.task-create');
     }
     #[On('hidden')]

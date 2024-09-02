@@ -36,6 +36,8 @@ class DetailShow extends Component
 
     public function render()
     {
+        $this->authorize('detail-task');
+
         return view('livewire.modal.task.detail.detail-show');
     }
 

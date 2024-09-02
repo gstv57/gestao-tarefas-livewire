@@ -19,7 +19,6 @@ class UsuariosSeeder extends Seeder
                 'name'     => $faker->name,
                 'email'    => $faker->email,
                 'password' => 123,
-                'role_id'  => rand(2, 3),
             ]);
         }
     }

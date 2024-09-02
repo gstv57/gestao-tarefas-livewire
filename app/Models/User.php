@@ -48,6 +48,7 @@ class User extends Authenticatable
             'password'          => 'hashed',
         ];
     }
+
     protected $dispatchesEvents = [
         'created' => UsuarioCriado::class,
     ];
@@ -57,12 +58,22 @@ class User extends Authenticatable
     }
     public function hasPermission($permission): bool
     {
+        // remover logs no futuro
+        // \Log::info("Checking permission: {$permission} for user: {$this->id}");
         return $this->roles()->whereHas('permissions', function ($query) use ($permission) {
             $query->where('name', $permission);
         })->exists();
+
+        // \Log::info('Permission check result: ' . ($result ? 'true' : 'false'));
+
+        return $result;
     }
     public function projetos(): belongsToMany
     {
         return $this->belongsToMany(Projeto::class, 'projetos_users');
+    }
+    public function is_admin(): bool
+    {
+        return $this->roles()->where('name', 'Administrador')->exists();
     }
 }

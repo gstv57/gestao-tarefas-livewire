@@ -12,25 +12,29 @@ class RoleCreate extends Component
 {
     use IsModal;
     use LivewireAlert;
+
     public $permissions;
 
-    public $name = '';
+    public string $name = '';
+
+    public string $description = '';
+
     public $permissionsSelected = [];
 
     public function render()
     {
         return view('livewire.role.role-create');
     }
-
     public function mount($permissions)
     {
+        $this->authorize('create-role');
         $this->permissions = $permissions;
     }
-
     public function save()
     {
         $role = Role::create([
-            'name' => $this->name,
+            'name'        => $this->name,
+            'description' => $this->description,
         ]);
         $role->permissions()->attach($this->permissionsSelected);
         $this->reset('name', 'permissionsSelected');
@@ -42,6 +46,7 @@ class RoleCreate extends Component
     public function cleanup()
     {
         $this->name                = '';
-        $this->permissionsSelected = 0;
+        $this->permissionsSelected = [];
     }
+
 }

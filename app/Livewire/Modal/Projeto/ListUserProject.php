@@ -29,6 +29,7 @@ class ListUserProject extends Component
 
     public function mount(Projeto $projeto)
     {
+        $this->authorize('list-user-projeto');
         $this->projeto = $projeto;
         $this->users   = $this->projeto->users;
     }

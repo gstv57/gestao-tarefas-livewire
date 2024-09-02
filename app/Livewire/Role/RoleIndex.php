@@ -2,16 +2,22 @@
 
 namespace App\Livewire\Role;
 
-use Livewire\Attributes\On;
 use App\Models\{Permission, Role};
 use Illuminate\Database\Eloquent\Collection;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\On;
 use Livewire\Component;
+use Mockery\Exception;
 
 class RoleIndex extends Component
 {
+    use LivewireAlert;
+
     public Collection $permissions;
 
     public Collection $roles;
+
+    protected $listeners = ['role-deleted' => '$refresh', 'role-updated' => '$refresh'];
 
     public function render()
     {
@@ -19,6 +25,7 @@ class RoleIndex extends Component
     }
     public function mount()
     {
+        $this->authorize('view-role');
         $this->permissions = $this->getPermissionsProperty();
         $this->roles       = $this->getRolesProperty();
     }
@@ -36,4 +43,14 @@ class RoleIndex extends Component
         return Permission::all();
     }
 
+    public function destroyRole(Role $role): void
+    {
+        try {
+            $role->delete();
+            $this->dispatch('role-deleted')->self();
+            $this->alert('success', 'Role excluída com sucesso!');
+        } catch (Exception $e) {
+            dd($e->getMessage());
+        }
+    }
 }

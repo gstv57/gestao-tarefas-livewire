@@ -24,7 +24,7 @@
                     @error('files.*') <span class="error">{{ $message }}</span> @enderror
                 </div>
                 <button type="button" class="btn btn-sm btn-info align-self-end" title="Ver Arquivos Existentes"
-                        wire:click="$dispatchTo('modal.task.detail.file.file-upload', 'show-modal', { task: {{ $task->id ?? '' }} })">
+                        wire:click="$dispatchTo('modal.role.role-edit', 'show-modal', { task: {{ $task->id ?? '' }} })">
                     <i class="fas fa-folder"></i>
                 </button>
             </div>

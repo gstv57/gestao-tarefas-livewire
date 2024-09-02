@@ -28,10 +28,13 @@ class UsuarioShow extends Component
 
     public function render(): View
     {
+        $this->authorize('view-user');
+
         return view('livewire.usuario.usuario-show')->layout('layouts.app');
     }
     public function mount(User $id): void
     {
+        $this->authorize('view-user');
         $this->usuario     = $id->load('roles');
         $this->name        = $this->usuario->name;
         $this->email       = $this->usuario->email;
@@ -47,8 +50,8 @@ class UsuarioShow extends Component
         ]);
 
         try {
-            $this->usuario->name    = $this->name;
-            $this->usuario->role_id = $this->role_id;
+            $this->usuario->name = $this->name;
+            $this->usuario->roles()->sync($this->role_id);
             $this->usuario->save();
             $this->alert('success', 'Usúario atualizado com sucesso!');
         } catch (Exception) {

@@ -22,6 +22,7 @@ class GroupCreate extends Component
 
     public function mount(Board $board)
     {
+        $this->authorize('create-group');
         $this->board = $board;
     }
     public function render()

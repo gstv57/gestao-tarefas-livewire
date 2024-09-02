@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany};
 
 class Board extends Model
 {
-    protected $fillable = ['name', 'projeto_id'];
+    protected $fillable = ['projeto_id'];
 
     public function projeto(): BelongsTo
     {

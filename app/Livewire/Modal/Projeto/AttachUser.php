@@ -29,6 +29,7 @@ class AttachUser extends Component
     }
     public function mount(Projeto $projeto)
     {
+        $this->authorize('attach-user-projeto');
         $this->projeto = $projeto;
         $this->get_users_in_project();
     }

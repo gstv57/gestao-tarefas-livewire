@@ -27,9 +27,9 @@ class ProjetoShow extends Component
     {
         return view('livewire.projeto.projeto-show')->layout('layouts.app');
     }
-
     public function mount(Projeto $id): void
     {
+        $this->authorize('view-projeto');
         $this->projeto            = $id->load('board.groups.tasks.users');
         $this->membros_existentes = $this->projeto->users;
 

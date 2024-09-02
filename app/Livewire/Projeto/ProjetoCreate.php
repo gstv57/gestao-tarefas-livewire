@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Projeto;
 
-use App\Models\Projeto;
+use App\Models\{Board, Projeto};
 use Exception;
 use Illuminate\Validation\Rule;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
@@ -41,12 +41,13 @@ class ProjetoCreate extends Component
         $validated['user_id'] = auth()->user()->id;
 
         try {
-            Projeto::create($validated);
+            $projeto = Projeto::create($validated);
+            Board::create(['projeto_id' => $projeto->id]);
             $this->alert('success', 'Redirecionando!');
             $this->unfill();
-            //to_route("projetos.show");
-        } catch (Exception $e) {
-            dd($e->getMessage());
+
+            return redirect(route('projetos.show', $projeto->id));
+        } catch (Exception) {
             $this->alert('error', 'Ocorreu um erro ao criar o projeto. Tente novamente.');
         }
     }
@@ -54,5 +55,8 @@ class ProjetoCreate extends Component
     {
         $this->reset();
     }
-
+    public function mount()
+    {
+        $this->authorize('create-projeto');
+    }
 }

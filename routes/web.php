@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Livewire\Role\RoleIndex;
 use App\Livewire\Projeto\{ProjetoCreate, ProjetoIndex, ProjetoShow};
+use App\Livewire\Role\RoleIndex;
 use App\Livewire\Usuario\{UsuarioCreate, UsuarioIndex, UsuarioShow};
 use Illuminate\Support\Facades\Route;
 
