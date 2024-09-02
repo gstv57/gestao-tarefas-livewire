@@ -10,12 +10,18 @@ class Role extends Model
 {
     use HasFactory;
     public const ROLE_ADMINISTRATOR = 1;
-    public const ROLE_OWNER         = 2;
-    public const ROLE_USER          = 3;
+    public const ROLE_GESTOR        = 2;
+    public const ROLE_FUNCIONARIO   = 3;
 
     protected $fillable = ['name'];
     public function permissions(): belongsToMany
     {
-        return $this->belongsToMany(Permission::class);
+        return $this->belongsToMany(Permission::class, 'permission_role');
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
 }

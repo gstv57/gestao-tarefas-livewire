@@ -3,9 +3,11 @@
 namespace App\Livewire\Projeto;
 
 use App\Models\{Group, Projeto, Task, User};
+use Carbon\Carbon;
 use Exception;
 use Illuminate\View\View;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 class ProjetoShow extends Component
@@ -20,7 +22,7 @@ class ProjetoShow extends Component
 
     public $membros_existentes;
 
-    protected $listeners = ['users-attach' => '$refresh', 'task-created' => '$refresh', 'column-created' => '$refresh', 'task-deleted' => '$refresh'];
+    protected $listeners = ['users-attach' => '$refresh', 'task-created' => '$refresh', 'column-created' => '$refresh', 'task-deleted' => '$refresh', 'task-updated' => '$refresh'];
     public function render(): View
     {
         return view('livewire.projeto.projeto-show')->layout('layouts.app');
@@ -28,7 +30,7 @@ class ProjetoShow extends Component
 
     public function mount(Projeto $id): void
     {
-        $this->projeto            = $id->load('board.groups.tasks.user');
+        $this->projeto            = $id->load('board.groups.tasks.users');
         $this->membros_existentes = $this->projeto->users;
 
         $this->membros = User::where('is_active', 1)
@@ -83,5 +85,39 @@ class ProjetoShow extends Component
         } catch (Exception $exception) {
             $this->alert('error', $exception->getMessage());
         }
+    }
+    #[Computed]
+    public function calculateProgress($task_id)
+    {
+        $task = Task::find($task_id);
+
+        if ($task->started_at === null || $task->finished_at === null) {
+            return 0;
+        }
+
+        $start = Carbon::parse($task->started_at);
+
+        $end = Carbon::parse($task->finished_at);
+
+        $now = Carbon::now();
+
+        if ($now->lt($start)) {
+            return 0;
+        }
+
+        if ($now->gte($end)) {
+            return 100;
+        }
+
+        $totalDuration   = $start->diffInDays($end);
+        $elapsedDuration = $start->diffInDays($now);
+
+        // Evita divisão por zero
+        if ($totalDuration == 0) {
+            return 100;
+        }
+        $progress = ($elapsedDuration / $totalDuration) * 100;
+
+        return round($progress, 2);
     }
 }

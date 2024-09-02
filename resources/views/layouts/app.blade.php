@@ -88,6 +88,11 @@
                     </a>
                 </li>
                     <li>
+                        <a href="">
+                            <span class="sub-item">Criar Roles</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('projeto.index') }}">
                             <span class="sub-item">Todos os Projetos</span>
                         </a>

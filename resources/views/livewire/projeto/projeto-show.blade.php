@@ -31,21 +31,40 @@
                                             @this.reorderTasks({ groupId, tasksIds })
                                         }
                                      })">
-                                @forelse($group->tasks->sortBy('position') as $task)
+                                @foreach($group->tasks->sortBy('position') as $task)
                                     <div task-id="{{ $task->id }}"
-                                         class="p-2 mb-2 bg-dark text-light rounded cursor-pointer d-flex justify-content-between align-items-center">
-                                        <span>{{ $task->name }}</span>
-                                        <button class="btn btn-danger btn-sm delete-task"
-                                                wire:click="deleteTask({{ $task->id }})"
-                                                title="Excluir tarefa">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
+                                         class="p-2 mb-2 bg-dark text-light rounded cursor-pointer d-flex flex-column justify-content-between align-items-start">
+                                        <!-- Nome da Tarefa -->
+                                        <div class="d-flex justify-content-between align-items-center w-100">
+                                            <span>{{ $task->name }}</span>
+                                            {{-- Botão para detalhes --}}
+                                            <button
+                                                wire:click="$dispatchTo('modal.task.detail.detail-show', 'show-modal', { task: {{ $task->id }} })"
+                                                class="btn btn-info btn-sm" title="Ver mais detalhes">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+
+                                        <!-- Barra de Progresso -->
+                                        <div class="w-100 mt-2">
+                                            <div class="progress">
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated
+                                                    {{ $this->calculateProgress($task->id) < 33 ? 'bg-danger' : ($this->calculateProgress($task->id) < 66 ? 'bg-warning' : 'bg-success') }}"
+                                                     role="progressbar"
+                                                     style="width: {{ $this->calculateProgress($task->id) }}%"
+                                                     aria-valuenow="{{ $this->calculateProgress($task->id) }}"
+                                                     aria-valuemin="0"
+                                                     aria-valuemax="100">
+                                                    {{ $this->calculateProgress($task->id) }}%
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
                                     </div>
-                                @empty
-                                    <div class="p-2 mb-2 bg-dark text-light rounded cursor-pointer">
-                                        Crie a primeira tarefa
-                                    </div>
-                                @endforelse
+                                @endforeach
+
                             </div>
                             <button class="btn btn-primary btn-sm w-100"
                                     wire:click="$dispatchTo('modal.task.task-create', 'show-modal', { id: {{ $group->id }} })">
@@ -80,12 +99,6 @@
                         <i class="fas fa-user me-1"></i> Ver Usuários Ativos
                     </button>
                 </div>
-
-                <div class="flex-grow-1 mb-3">
-                    <button class="btn btn-dark btn-sm w-100">
-                        <i class="fas fa-book me-1"></i> Ver historico
-                    </button>
-                </div>
             </div>
         </div>
     </div>
@@ -100,6 +113,9 @@
     <livewire:modal.group.group-create :board="$projeto->board->id"></livewire:modal.group.group-create>
     <livewire:modal.projeto.attach-user :projeto="$projeto->id"></livewire:modal.projeto.attach-user>
     <livewire:modal.projeto.list-user-project :projeto="$projeto->id"></livewire:modal.projeto.list-user-project>
+    <livewire:modal.task.detail.detail-show></livewire:modal.task.detail.detail-show>
+    <livewire:modal.task.detail.file.file-upload></livewire:modal.task.detail.file.file-upload>
+
     <style>
         .card {
             border: 1px solid rgba(255, 255, 255, 0.1);

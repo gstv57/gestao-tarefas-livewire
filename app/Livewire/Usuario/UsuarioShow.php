@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Usuario;
 
-use App\Models\{Role, User};
+use App\Models\{Permission, Role, User};
 use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Validation\Rule;
@@ -24,23 +24,23 @@ class UsuarioShow extends Component
 
     public Collection $roles;
 
+    public Collection $permissions;
+
     public function render(): View
     {
         return view('livewire.usuario.usuario-show')->layout('layouts.app');
     }
     public function mount(User $id): void
     {
-        $this->usuario = $id->load('role');
-        $this->name    = $this->usuario->name;
-        $this->email   = $this->usuario->email;
-        $this->role_id = $this->usuario->role_id;
-        $this->roles   = Role::all();
+        $this->usuario     = $id->load('roles');
+        $this->name        = $this->usuario->name;
+        $this->email       = $this->usuario->email;
+        $this->role_id     = $this->usuario->role_id;
+        $this->roles       = Role::all();
+        $this->permissions = Permission::all();
     }
-
     public function update(): void
     {
-        $this->authorize('update-user');
-
         $this->validate([
             'name'    => ['required', 'min:3', 'string'],
             'role_id' => ['required', Rule::in(1, 2, 3)],

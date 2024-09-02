@@ -11,8 +11,9 @@ return new class () extends Migration {
             $table->id();
             $table->string('name');
             $table->foreignId('group_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->unsignedInteger('position')->nullable();
+            $table->dateTime('started_at')->nullable();
+            $table->dateTime('finished_at')->nullable();
             $table->timestamps();
         });
     }

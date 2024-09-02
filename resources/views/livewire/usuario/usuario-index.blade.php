@@ -19,7 +19,7 @@
                     <td>{{$usuario->id}}</td>
                     <td>{{$usuario->name}}</td>
                     <td>{{$usuario->email}}</td>
-                    <td>{{$usuario->role->name}}</td>
+                    <td>{{$usuario->role->name ?? ''}}</td>
                     <td>
                         <a href="{{route('usuarios.show', $usuario->id) }}" wire:navigate.hover class="btn btn-primary btn-rounded">Ver</a>
                     </td>

@@ -1,10 +1,11 @@
 <div class="col-md-12">
     <div class="card">
         <div class="card-header">
-            <div class="card-title">Detalhes do Usúario: {{ $usuario->name }}</div>
+            <div class="card-title">Detalhes do Usuário: {{ $usuario->name }}</div>
         </div>
         <div class="card-body">
             <div class="row">
+                <!-- Coluna para o formulário de edição de usuário -->
                 <div class="col-md-6 col-lg-4">
                     <form wire:submit.prevent="update">
                         <div class="form-group @error('name') {{ 'has-error' }} @enderror">
@@ -29,7 +30,7 @@
                             <select wire:model="role_id" class="form-control" id="role_id" name="role_id">
                                 <option>Selecione uma opção de cargo</option>
                                 @forelse($roles as $role)
-                                    <option {{ $usuario->role->id == $role->id ? 'selected' : '' }} value="{{ $role->id }}">{{$role->name}}</option>
+                                    <option value="{{ $role->id }}">{{ $role->name }}</option>
                                 @empty
                                     <option selected>Nenhum cargo cadastrado.</option>
                                 @endforelse
@@ -39,6 +40,8 @@
                         <a href="{{ route('usuarios.index') }}" wire:navigate class="btn btn-danger">Cancelar</a>
                     </form>
                 </div>
+
+
             </div>
         </div>
     </div>

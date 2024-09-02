@@ -25,6 +25,7 @@ class ProjetoCreate extends Component
     public $end_date;
     public function render()
     {
+
         return view('livewire.projeto.projeto-create')->layout('layouts.app');
     }
     public function store()
@@ -53,4 +54,5 @@ class ProjetoCreate extends Component
     {
         $this->reset();
     }
+
 }

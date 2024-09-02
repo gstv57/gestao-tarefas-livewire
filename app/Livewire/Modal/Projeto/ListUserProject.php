@@ -12,6 +12,7 @@ use Livewire\Component;
 class ListUserProject extends Component
 {
     use IsModal;
+
     use LivewireAlert;
 
     public string $query = '';
@@ -64,7 +65,6 @@ class ListUserProject extends Component
 
     public function updatedQuery()
     {
-        // return query only users where belong this project
         $this->users = User::where('name', 'like', '%' . $this->query . '%')
             ->WhereHas('projetos', function ($query) {
                 $query->where('projeto_id', $this->projeto->id);
@@ -77,6 +77,6 @@ class ListUserProject extends Component
     {
         $this->users_selected = [];
         $this->query          = '';
+        $this->users          = $this->projeto->users;
     }
-
 }

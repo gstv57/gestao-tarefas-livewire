@@ -28,5 +28,9 @@ class TaskSeeder extends Seeder
             'name'     => 'Fazer 4',
             'group_id' => 4,
         ]);
+        Task::create([
+            'name'     => 'Fazer 5',
+            'group_id' => 5,
+        ]);
     }
 }

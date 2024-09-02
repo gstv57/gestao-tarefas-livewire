@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Livewire\Role\RoleIndex;
 use App\Livewire\Projeto\{ProjetoCreate, ProjetoIndex, ProjetoShow};
 use App\Livewire\Usuario\{UsuarioCreate, UsuarioIndex, UsuarioShow};
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/roles', RoleIndex::class)->name('roles.index');
 
     Route::get('/usuarios', UsuarioIndex::class)->name('usuarios.index');
     Route::get('/usuarios/criar', UsuarioCreate::class)->name('usuarios.create');

@@ -52,7 +52,6 @@ class AttachUser extends Component
     }
     public function updatedQuery()
     {
-        // return query only users where not belong this project
         $this->users = User::where('name', 'like', '%' . $this->query . '%')
             ->whereDoesntHave('projetos', function ($query) {
                 $query->where('projeto_id', $this->projeto->id);
@@ -81,5 +80,6 @@ class AttachUser extends Component
     {
         $this->users_selected = [];
         $this->query          = '';
+        $this->get_users_in_project();
     }
 }

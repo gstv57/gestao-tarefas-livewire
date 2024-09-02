@@ -24,5 +24,6 @@ class AppServiceProvider extends ServiceProvider
         Model::handleLazyLoadingViolationUsing(function (Model $model, string $relation) {
             info("Attempted to lazy load [$relation] on model [$model]");
         });
+
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Usuario;
 
-use App\Models\{Role, User};
+use App\Models\{User};
 use Exception;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
@@ -23,8 +23,6 @@ class UsuarioCreate extends Component
     public $role_id;
     public function render(): View
     {
-        $roles = Role::all();
-
         return view('livewire.usuario.usuario-create', compact('roles'))
             ->layout('layouts.app');
     }
@@ -36,7 +34,6 @@ class UsuarioCreate extends Component
             'password' => ['required', 'min:3', Password::defaults()],
             'role_id'  => ['required', Rule::in(1, 2, 3)],
         ]);
-        $this->authorize('create-user');
 
         try {
             User::create($validated);
