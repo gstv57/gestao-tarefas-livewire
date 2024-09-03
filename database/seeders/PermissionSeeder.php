@@ -15,10 +15,10 @@ class PermissionSeeder extends Seeder
             'user'       => ['create', 'view', 'edit', 'update', 'destroy', 'list'],
             'role'       => ['create', 'view', 'edit', 'update', 'destroy'],
             'permission' => ['create', 'view', 'edit', 'update', 'destroy'],
-            'projeto'    => ['create', 'view', 'edit', 'update', 'destroy', 'attach-user', 'list-user', 'settings'],
+            'projeto'    => ['create', 'view', 'edit', 'update', 'destroy', 'attach-user', 'list-user', 'settings', 'reorder-group', 'reorder-task'],
             'board'      => ['create', 'view', 'edit', 'update', 'destroy'],
             'group'      => ['create', 'view', 'edit', 'update', 'destroy'],
-            'task'       => ['create', 'view', 'edit', 'update', 'destroy', 'upload-file', 'detail'],
+            'task'       => ['create', 'view', 'edit', 'update', 'destroy', 'upload-file', 'detail', 'attach-for-me'],
         ];
 
         foreach ($permissions as $module => $actions) {
@@ -33,7 +33,7 @@ class PermissionSeeder extends Seeder
                 ]);
             }
         }
-        DB::table('role_user')->insert([
+        DB::table('role_users')->insert([
             'role_id'    => 1,
             'user_id'    => 1,
             'created_at' => now(),

@@ -5,7 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Events\UsuarioCriado;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\{BelongsToMany};
+use Illuminate\Database\Eloquent\Relations\{BelongsToMany, HasOne};
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -54,7 +54,7 @@ class User extends Authenticatable
     ];
     public function roles(): belongsToMany
     {
-        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
+        return $this->belongsToMany(Role::class, 'role_users', 'user_id', 'role_id');
     }
     public function hasPermission($permission): bool
     {
@@ -63,10 +63,7 @@ class User extends Authenticatable
         return $this->roles()->whereHas('permissions', function ($query) use ($permission) {
             $query->where('name', $permission);
         })->exists();
-
         // \Log::info('Permission check result: ' . ($result ? 'true' : 'false'));
-
-        return $result;
     }
     public function projetos(): belongsToMany
     {
@@ -75,5 +72,24 @@ class User extends Authenticatable
     public function is_admin(): bool
     {
         return $this->roles()->where('name', 'Administrador')->exists();
+    }
+    public function belongsToProject($project): bool
+    {
+        if (is_numeric($project)) {
+            return $this->projetos()->where('projetos.id', $project)->exists();
+        }
+
+        return $this->projetos()->where('projetos.id', $project->id)->exists();
+    }
+    public function inbox(): hasOne
+    {
+        return $this->hasOne(Inbox::class);
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($user) {
+            $user->inbox()->create();
+        });
     }
 }

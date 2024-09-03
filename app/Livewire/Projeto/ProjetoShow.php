@@ -29,7 +29,7 @@ class ProjetoShow extends Component
     }
     public function mount(Projeto $id): void
     {
-        $this->authorize('view-projeto');
+        $this->authorize('view-projeto', $id);
         $this->projeto            = $id->load('board.groups.tasks.users');
         $this->membros_existentes = $this->projeto->users;
 
@@ -37,9 +37,10 @@ class ProjetoShow extends Component
             ->whereNotIn('id', $this->membros_existentes->pluck('id')->toArray())
             ->get();
     }
-
     public function reorderGroups($group_ids): void
     {
+        $this->authorize('reorder-group-projeto');
+
         $groups = Group::query()->findMany($group_ids)
             ->map(function (Group $group) use ($group_ids) {
                 $group->position = array_flip($group_ids)[$group->id];
@@ -56,6 +57,8 @@ class ProjetoShow extends Component
 
     public function reorderTasks($params): void
     {
+        $this->authorize('reorder-task-projeto');
+
         $groupId = $params['groupId'];
         $taskIds = $params['tasksIds'];
 
@@ -68,6 +71,8 @@ class ProjetoShow extends Component
     }
     public function attachForMe(Task $task): void
     {
+        $this->authorize('attach-for-me');
+
         try {
             $task->user_id = auth()->user()->id;
             $task->save();
@@ -78,6 +83,8 @@ class ProjetoShow extends Component
     }
     public function deleteTask(Task $task)
     {
+        $this->authorize('destroy-task');
+
         try {
             $task->delete();
             $this->dispatch('task-deleted')->self();
@@ -119,5 +126,16 @@ class ProjetoShow extends Component
         $progress = ($elapsedDuration / $totalDuration) * 100;
 
         return round($progress, 2);
+    }
+    public function destroyGroup(Group $group)
+    {
+        $this->authorize('destroy-group');
+
+        try {
+            $group->delete();
+            $this->alert('success', 'Grupo excluído com sucesso!');
+        } catch (Exception) {
+            $this->alert('error', 'Entre em contato com o suporte');
+        }
     }
 }

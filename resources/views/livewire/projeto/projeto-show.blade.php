@@ -8,15 +8,23 @@
                     const group_ids = Array.from(to.children).map(item => item.getAttribute('group-id'))
                     @this.reorderGroups(group_ids);
                 }
-             })"
-    >
+             })">
         @if($projeto->board)
             @foreach($projeto->board->groups->sortBy('position') as $group)
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2" group-id="{{ $group->id }}">
                     <div class="card bg-body h-100">
                         <div class="card-header d-flex justify-content-between align-items-center py-3">
                             <h5 class="card-title mb-0 text-black">{{ $group->name }}</h5>
-                            <i class="fas fa-grip-vertical drag-handle" style="cursor: grab;"></i>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-grip-vertical drag-handle"
+                                   style="cursor: grab; margin-right: 15px;"></i>
+                                    @can('destroy-group')
+                                        <button wire:click="destroyGroup({{ $group->id }})" wire:confirm.prompt="Você tem certeza? \n\nDigite EXCLUIR para confirmar|EXCLUIR"
+                                                style="background: none; border: none; cursor: pointer; padding: 0;">
+                                            <i class="fas fa-trash" style="color: red;"></i>
+                                        </button>
+                                    @endcan
+                            </div>
                         </div>
                         <div class="card-body d-flex flex-column">
                             <div class="flex-grow-1 mb-3"
@@ -59,8 +67,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
 
                                     </div>
                                 @endforeach

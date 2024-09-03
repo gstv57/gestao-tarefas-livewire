@@ -12,7 +12,7 @@ return new class () extends Migration {
     {
         Schema::create('boards', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('projeto_id')->constrained();
+            $table->foreignId('projeto_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

@@ -69,7 +69,6 @@
         <div class="sidebar-wrapper scrollbar scrollbar-inner">
             <div class="sidebar-content">
                 <ul class="nav nav-secondary">
-
                     @can('user-navbar')
                         <li class="nav-item submenu {{ Request::routeIs('usuarios.*') ? 'active' : '' }}">
                             <a data-bs-toggle="collapse" href="#userMenu" aria-expanded="{{ Request::routeIs('usuarios.*') ? 'true' : 'false' }}">
@@ -103,16 +102,20 @@
                             </a>
                             <div class="collapse {{ Request::routeIs('projeto.*') ? 'show' : '' }}" id="projectMenu">
                                 <ul class="nav nav-collapse">
-                                    <li>
-                                        <a href="{{ route('projeto.index') }}" wire:navigate class="{{ Request::routeIs('projeto.index') ? 'active' : '' }}">
-                                            <span class="sub-item">Ver Projetos</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ route('projetos.create') }}" wire:navigate class="{{ Request::routeIs('projetos.create') ? 'active' : '' }}">
-                                            <span class="sub-item">Criar Projeto</span>
-                                        </a>
-                                    </li>
+                                    @can('view-projeto')
+                                        <li>
+                                            <a href="{{ route('projeto.index') }}" wire:navigate class="{{ Request::routeIs('projeto.index') ? 'active' : '' }}">
+                                                <span class="sub-item">Ver Projetos</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('create-projeto')
+                                        <li>
+                                            <a href="{{ route('projetos.create') }}" wire:navigate class="{{ Request::routeIs('projetos.create') ? 'active' : '' }}">
+                                                <span class="sub-item">Criar Projeto</span>
+                                            </a>
+                                        </li>
+                                    @endcan
                                 </ul>
                             </div>
                         </li>
@@ -409,19 +412,23 @@
                         <div class="u-text">
                           <h4>{{ Auth::user()->name }}</h4>
                           <p class="text-muted">{{ Auth::user()->email }}</p>
-                          <a href="profile.html" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
                         </div>
                       </div>
                     </li>
                     <li>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">My Profile</a>
-                      <a class="dropdown-item" href="#">My Balance</a>
-                      <a class="dropdown-item" href="#">Inbox</a>
+                      <a class="dropdown-item" href="#">Meu perfil</a>
+                      <a class="dropdown-item" href="{{ route('inbox.index') }}" wire:navigate>Caixa de Entrada</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#">Account Setting</a>
+                      <a class="dropdown-item" href="#">Configurações da Conta</a>
                       <div class="dropdown-divider"></div>
-                      <a class="dropdown-item">Logout</a>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            Sair
+                        </a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
                     </li>
                   </div>
                 </ul>
