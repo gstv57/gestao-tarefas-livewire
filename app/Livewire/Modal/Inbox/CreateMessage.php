@@ -2,9 +2,10 @@
 
 namespace App\Livewire\Modal\Inbox;
 
-use App\Livewire\InboxIndex;
+use App\Events\SendMessageEvent;
 use App\Livewire\Traits\IsModal;
 use App\Models\{InboxMessage, User};
+use Exception;
 use Illuminate\Support\Carbon;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\On;
@@ -51,9 +52,9 @@ class CreateMessage extends Component
 
             $this->alert('success', 'Mensagem enviada com sucesso!');
             $this->dispatch('close-modal')->self();
-            $this->dispatch('created-message')->to(InboxIndex::class);
+            event(new SendMessageEvent($this->getUser($this->to)));
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             dd($exception->getMessage());
         }
     }

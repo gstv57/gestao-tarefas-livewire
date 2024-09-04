@@ -13,7 +13,7 @@ class InboxMessage extends Model
     public const TYPE_SENT     = 'sent';
     public const TYPE_RECEIVED = 'received';
 
-    protected $fillable = ['inbox_id', 'sender_id', 'receiver_id', 'content', 'type'];
+    protected $fillable = ['inbox_id', 'sender_id', 'receiver_id', 'content', 'type', 'read'];
 
     public function inbox(): BelongsTo
     {

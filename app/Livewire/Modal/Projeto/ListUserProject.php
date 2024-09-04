@@ -4,7 +4,10 @@ namespace App\Livewire\Modal\Projeto;
 
 use App\Livewire\Projeto\ProjetoShow;
 use App\Livewire\Traits\IsModal;
+use Illuminate\Support\Facades\Log;
 use App\Models\{Projeto, User};
+use Exception;
+use Illuminate\Support\Facades\DB;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -49,19 +52,28 @@ class ListUserProject extends Component
             }
         }
         $this->users_selected = array_values($this->users_selected);
+
     }
     public function dettachUser()
     {
-        $ids = [];
+        DB::beginTransaction();
 
-        foreach ($this->users_selected as $user) {
-            $ids[] = $user->id;
+        try {
+            $ids = [];
+
+            foreach ($this->users_selected as $user) {
+                $ids[] = $user->id;
+            }
+            $this->projeto->users()->detach($ids);
+            DB::commit();
+
+            $this->dispatch('close-modal')->self();
+            $this->dispatch('users-attach')->to(ProjetoShow::class);
+            $this->alert('success', 'Usúarios desvinculados com sucesso!');
+        } catch (Exception $e) {
+            Log::warning($e->getMessage());
+            $this->alert('error', 'Algo de errado aconteceu, entre em contato com o suporte.');
         }
-        $this->projeto->users()->detach($ids);
-
-        $this->dispatch('close-modal')->self();
-        $this->dispatch('users-attach')->to(ProjetoShow::class);
-        $this->alert('success', 'Usúarios desvinculados com sucesso!');
     }
 
     public function updatedQuery()

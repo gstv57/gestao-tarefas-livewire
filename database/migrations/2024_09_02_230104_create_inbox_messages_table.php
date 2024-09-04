@@ -18,6 +18,7 @@ return new class () extends Migration {
 
             $table->text('content')->nullable();
             $table->string('type');
+            $table->boolean('read')->default(false);
             $table->timestamps();
 
             $table->foreign('inbox_id')->references('id')->on('inboxes')->onDelete('cascade');

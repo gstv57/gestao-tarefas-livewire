@@ -24,16 +24,17 @@
                                         <div class="message-content">
                                             <h5 class="mb-1">{{ $mensagem->content }}</h5>
                                             <p class="mb-1">Remetente: {{ $mensagem->sender->name }}</p>
-                                            <small>3 dias atrás</small>
+                                            <small>{{ $mensagem->created_at->diffForHumans() }}</small>
+                                            <small>{{ $mensagem->read ? 'Lida' : 'Não lida ainda' }}</small>
                                         </div>
                                         <div class="message-options">
                                             <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="dropdown" aria-expanded="false">
                                                 <i class="fas fa-cog"></i>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="#"><i class="fas fa-eye"></i> Ver detalhes</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fas fa-reply"></i> Responder</a></li>
-                                                <li><a class="dropdown-item" href="#"><i class="fas fa-trash"></i> Excluir</a></li>
+{{--                                                <li><a class="dropdown-item"><i class="fas fa-eye"></i> Ver detalhes</a></li>--}}
+                                                <li><a class="dropdown-item" href="{{ route('inbox.message.between.users', ['sender_id' => $mensagem->sender_id ]) }}" wire:navigate><i class="fas fa-reply"></i> Responder</a></li>
+{{--                                                <li><a class="dropdown-item" href="#"><i class="fas fa-trash"></i> Excluir</a></li>--}}
                                             </ul>
                                         </div>
                                     </div>

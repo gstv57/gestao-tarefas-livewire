@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Modal\Projeto;
 
+use App\Events\ProjetoAttachUser;
 use App\Livewire\Projeto\ProjetoShow;
 use App\Livewire\Traits\IsModal;
 use App\Models\{Projeto, User};
@@ -49,6 +50,7 @@ class AttachUser extends Component
 
         $this->dispatch('close-modal')->self();
         $this->dispatch('users-attach')->to(ProjetoShow::class);
+        event(new ProjetoAttachUser($ids, $this->projeto));
         $this->alert('success', 'Usúarios vinculados com sucesso!');
     }
     public function updatedQuery()

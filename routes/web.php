@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Livewire\InboxIndex;
+use App\Livewire\Inbox\{InboxIndex, InboxViewMessage};
 use App\Livewire\Projeto\{ProjetoCreate, ProjetoIndex, ProjetoShow};
 use App\Livewire\Role\RoleIndex;
 use App\Livewire\Usuario\{UsuarioCreate, UsuarioIndex, UsuarioShow};
@@ -31,6 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/projetos/{id}', ProjetoShow::class)->name('projetos.show');
 
     Route::get('/inbox', InboxIndex::class)->name('inbox.index');
+    Route::get('/inbox/mensagens/{sender_id}', InboxViewMessage::class)->name('inbox.message.between.users');
 });
 
 require __DIR__ . '/auth.php';

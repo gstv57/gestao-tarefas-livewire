@@ -5,7 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Events\UsuarioCriado;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\{BelongsToMany, HasOne};
+use Illuminate\Database\Eloquent\Relations\{BelongsToMany, HasMany, HasOne};
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -91,5 +91,9 @@ class User extends Authenticatable
         static::created(function ($user) {
             $user->inbox()->create();
         });
+    }
+    public function notification(): hasMany
+    {
+        return $this->hasMany(Notification::class);
     }
 }
